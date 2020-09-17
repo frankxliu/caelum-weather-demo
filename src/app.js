@@ -32,7 +32,7 @@ app.get('', (req, res) => {
     // .render('name of view to render','object containing all values you want the view to access')
     // inject a value in hbs file {{reference access}}
     res.render('index', {
-        title: 'Weather App',
+        title: 'Weather',
         name: 'Frankie'
     })
 })
