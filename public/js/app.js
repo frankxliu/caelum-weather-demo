@@ -1,20 +1,10 @@
-// fetch('http://localhost:3000/weather?address=Boston').then((response) =>{
-//     response.json().then((data)=>{
-//         if (data.error) {
-//             console.log(data.error)
-//         } else {
-//             console.log(data.location)
-//             console.log(data.forecast)
-//         }
-//     })
-// })
-
 const weatherForm = document.querySelector('form')
 const search = document.querySelector('input')
 const areaID = document.querySelector('#areaID')
 const message = document.querySelector('.message')
 const displayLocation = document.querySelector('#location')
 const time = document.querySelector('#time')
+const observationTime = document.querySelector('#observedTime')
 
 const temperature = document.querySelector('#temperature')
 const messageTwo = document.querySelector('#message-2')
@@ -39,6 +29,7 @@ weatherForm.addEventListener('submit', (e) => {
 
     areaID.style.display = 'block'
     time.textContent = ''
+    observationTime.textContent = ''
     displayLocation.textContent = 'Loading...'
     messageTwo.textContent = ''
     messageThree.textContent = ''
@@ -53,6 +44,7 @@ weatherForm.addEventListener('submit', (e) => {
                 console.log(data)
                 displayLocation.textContent = data.location
                 time.textContent = data.time
+                observationTime.textContent = data.observeTime
 
                 temperature.style.display = 'block'
                 messageTwo.textContent = data.forecast

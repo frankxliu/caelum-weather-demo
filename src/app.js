@@ -7,7 +7,7 @@ const express = require('express')
 const hbs = require('hbs')
 const { brotliDecompressSync } = require('zlib')
 
-// run server with 'node src/app.js'
+// run server with 'npm run dev'
 
 console.log(__dirname)
 console.log(path.join(__dirname, '../public'))
@@ -16,7 +16,7 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 
 // Define paths for Express config
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 3000
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 
@@ -89,21 +89,20 @@ app.get('/weather', (req, res) =>{
             return res.send({ error })
         }
         forecast(latitude, longitude, (error, forecastData) => {
-            console.log(forecastData)
             if (error){
                 return res.send({ error })               
             }
             res.send({
-                forecast: forecastData.current.weather_descriptions[0] + '. \n Currently: ' + forecastData.current.temperature +'°C. \n It feels like ' + forecastData.current.feelslike +' °C outside.',
+                forecast: 'Currently: ' + forecastData.current.temperature +'°C. \n It feels like ' + forecastData.current.feelslike +' °C outside.',
                 location,
                 address: req.query.address,
-                // icon: forecastData.current.weather_icons[0],
                 icon: "/img/temperature.png",
                 time: forecastData.location.localtime,
                 windicon: "/img/wind.png",
                 wind: 'Current wind speed: ' + forecastData.current.wind_speed + 'km/h [' + forecastData.current.wind_dir + ']',
                 rainicon: "/img/precipitation.png",
-                humidity: 'Current humidity: ' + forecastData.current.precip + '%'
+                humidity: 'Current humidity: ' + forecastData.current.precip + '%',
+                observeTime: 'Time of climate data: ' + forecastData.current.observation_time
             })
         })
     })
@@ -115,6 +114,18 @@ app.get('/weather', (req, res) =>{
     //     location: 'Markham',
     //     address: req.query.address
     // })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Frankie',
+        errorMessage: 'Page not found.'
+    })
+})
+
+app.listen(port, ()=>{
+    console.log('Server is up on port ' + port)
 })
 
 // app.get('/help/*', (req, res) => {
@@ -142,19 +153,7 @@ app.get('/weather', (req, res) =>{
 // else that hasn't been matched so far, or, more explicitly
 // * means everything is a match
 
-app.get('*', (req, res) => {
-    res.render('404', {
-        title: '404',
-        name: 'Frankie',
-        errorMessage: 'Page not found.'
-    })
-})
-
-app.listen(port, ()=>{
-    console.log('Server is up on port ' + port)
-})
-
-// Ex. app.com is a single domain runnning all on one server
+// Ex. app.com is a single domain running all on one server
 // app.com
 // app.com/about
 // app.com/help
