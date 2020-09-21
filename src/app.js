@@ -5,6 +5,7 @@ const forecast = require('./utils/forecast.js')
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const { brotliDecompressSync } = require('zlib')
 
 // run server with 'node src/app.js'
 
@@ -15,7 +16,7 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 
 // Define paths for Express config
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 
@@ -34,25 +35,25 @@ app.get('', (req, res) => {
     // .render('name of view to render','object containing all values you want the view to access')
     // inject a value in hbs file {{reference access}}
     res.render('index', {
-        title: 'Weather',
-        name: 'Frankie'
+        title: 'Caelum',
+        name: 'Frankie Liu'
     })
 })
 
 app.get('/about', (req,res) => {
     res.render('about',{
         title: 'About',
-        name: 'Frankie'
+        name: 'Frankie Liu'
     })
 })
 
-app.get('/help', (req,res) => {
-    res.render('help', {
-        message: 'Please contact 1-800-000-000',
-        title: 'Help',
-        name: 'Frankie'
-    })
-})
+// app.get('/help', (req,res) => {
+//     res.render('help', {
+//         message: 'Please contact 1-800-000-000',
+//         title: 'Help',
+//         name: 'Frankie Liu'
+//     })
+// })
 
 // .get lets us configure what a server should do when someone
 // tries to get the resource at a specific url (sending HTML or JSON)
@@ -88,16 +89,25 @@ app.get('/weather', (req, res) =>{
             return res.send({ error })
         }
         forecast(latitude, longitude, (error, forecastData) => {
+            console.log(forecastData)
             if (error){
                 return res.send({ error })               
             }
             res.send({
-                forecast: forecastData,
+                forecast: forecastData.current.weather_descriptions[0] + '. \n Currently: ' + forecastData.current.temperature +'°C. \n It feels like ' + forecastData.current.feelslike +' °C outside.',
                 location,
-                address: req.query.address
+                address: req.query.address,
+                // icon: forecastData.current.weather_icons[0],
+                icon: "/img/temperature.png",
+                time: forecastData.location.localtime,
+                windicon: "/img/wind.png",
+                wind: 'Current wind speed: ' + forecastData.current.wind_speed + 'km/h [' + forecastData.current.wind_dir + ']',
+                rainicon: "/img/precipitation.png",
+                humidity: 'Current humidity: ' + forecastData.current.precip + '%'
             })
         })
     })
+    // callback(undefined, body.current.weather_descriptions[0] + '. It is currently ' + body.current.temperature +' degrees celcius. It feels like ' + body.current.feelslike + ' degrees celcius outside.')
     
 
     // res.send({
@@ -107,26 +117,26 @@ app.get('/weather', (req, res) =>{
     // })
 })
 
-app.get('/help/*', (req, res) => {
-    res.render('404', {
-        title: '404',
-        name: 'Frankie',
-        errorMessage: 'Help article not found.'
-    })
-})
+// app.get('/help/*', (req, res) => {
+//     res.render('404', {
+//         title: '404',
+//         name: 'Frankie',
+//         errorMessage: 'Help article not found.'
+//     })
+// })
 
 // creating an end point that sets up products to be displayed in the browser in the site 
-app.get('/products', (req,res) =>{
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-    }
-    console.log(req.query.search)
-    res.send({
-        products: []
-    })
-})
+// app.get('/products', (req,res) =>{
+//     if (!req.query.search) {
+//         return res.send({
+//             error: 'You must provide a search term'
+//         })
+//     }
+//     console.log(req.query.search)
+//     res.send({
+//         products: []
+//     })
+// })
 
 // .get('*', (req,res)) * means to match everything
 // else that hasn't been matched so far, or, more explicitly

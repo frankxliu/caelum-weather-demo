@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" href="/img/weather.png">
-    <title>About</title>
+    {{!-- <link rel="icon" href="/img/weather.png"> --}}
+    <link rel="stylesheet" href="/css/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300&display=swap" rel="stylesheet">
+
+    <title>Caelum - About</title>
 </head>
 <body>
     <div class="main-content">
         {{>header}}
-        <img class="portrait" src="/img/weather.png" alt="">
+        <div id="header">
+            About Caelum
+        </div>
+
+        <div id="para">
+            <p>Caelum is a simple, minimalistic, and functional application that provides real time data of the entered location's weather.</p>
+            <p>This app an experimental demo integrating the new languages, skills, and libraries learned in the process. This weather application
+                uses the Weatherstack's RESTful API to retrieve real-time climate data corresponding to the user's input. </p>
+        </div>
+        {{!-- <img class="portrait" src="/img/weather.png" alt=""> --}}
     </div>
     {{>footer}}
 </body>

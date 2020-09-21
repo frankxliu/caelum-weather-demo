@@ -8,17 +8,29 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'Kumbh Sans', sans-serif;
+    background: rgb(6,145,255);
+    background: linear-gradient(180deg, rgba(6,145,255,1) 0%, rgba(124,201,255,1) 45%, rgba(255,255,255,1) 89%);
+}
+
+@keyframes fadeIn{
+    0%{opacity:0};
+    100%{opacity:1};
 }
 
 .main-content {
+    padding-top: 60px;
     flex-grow: 1;
+    animation-name: fadeIn;
+    animation-duration: 2s;
 }
 
 footer {
     color: #888888;
     border-top: 1px solid #eeeeee;
     margin-top: 16px;
-    padding: 16px 0;
+    padding: 5px 0;
+    font-size: 13px;
      
 }
 
@@ -43,14 +55,82 @@ header a{
 }
 
 input {
+    font-family: 'Kumbh Sans', sans-serif;
     border: 1px solid #cccccc;
-    padding: 8px;
+    border-radius: 10px 0 0 10px;
+    padding: 15px;
+    width:83%;
+    margin-right: -5px;
+    font-size: 15px;
 }
 
 button{
+    font-family: 'Kumbh Sans', sans-serif;
+    margin-left: 0;
     cursor: pointer;
-    border: 1px solid #888888;
-    background: #888888;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background: #3d8ffa;
     color: white;
-    padding: 8px;
+    padding: 15px;
+    font-size: 15px;
+
 }
+
+.message {
+    display: none;
+    border-radius: 10px;
+    color: white;
+    margin-top: 20px;
+    white-space: normal;
+    font-size: 1em;
+    padding: 5px 8px 5px 8px;
+
+}
+
+#areaID{
+    background-color: #83DBFF;
+    border: 2px solid #74c8e9;
+    padding: 5px 8px;
+}
+
+#time {
+    font-size: 2em;
+    margin: 15px 0;
+    color: white;
+}
+
+.icon{
+    position: relative;
+    width: 40px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: auto;
+    float: left;
+}
+
+#location{
+    font-size: 1em;
+    margin: 15px 0;
+    color: white;
+}
+
+
+#temperature{
+    background-color: #6691dc;
+    border: 2px solid #557ab9;
+}
+
+
+#windSpeed{
+    background-color: #b065db;
+    border: 2px solid #9757bd;
+}
+
+
+#rain {
+    background-color: #7c66dc;
+    border: 2px solid #6f5cc5
+}
+
+
